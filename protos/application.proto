@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option go_package = "./internal/genprotos";
+
+package genprotos;
+
+
+message CreateTaskRequest {
+    string task = 1;
+    bool deleted = 2;
+}
+
+message CreateTaskResponse {
+    string id = 1;
+    string task = 2;
+    bool deleted = 3;
+}
+
+message GetTaskByIdRequest {
+    string task_id = 1;
+}
+
+message GetAllTasksRequest {}
+
+message GetAllTasksResponse {
+    repeated CreateTaskResponse tasks = 1;
+}
+
+service TasksService {
+    rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
+    rpc GetTaskById(GetTaskByIdRequest) returns (CreateTaskResponse);
+    rpc GetAllTasks(GetAllTasksRequest) returns (GetAllTasksResponse);
+    rpc DeleteTaskById(GetTaskByIdRequest) returns (CreateTaskResponse);
+}
